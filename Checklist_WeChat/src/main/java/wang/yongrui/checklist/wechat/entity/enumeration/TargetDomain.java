@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum TargetDomain {
 
-	User("User"), Role("Role"), Permission("Permission");
+	All("All"), User("User"), Role("Role"), Privilege("Privilege");
 
 	private String description;
 

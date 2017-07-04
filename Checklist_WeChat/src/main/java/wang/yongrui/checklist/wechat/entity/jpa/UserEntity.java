@@ -5,6 +5,7 @@ package wang.yongrui.checklist.wechat.entity.jpa;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,7 +24,7 @@ import wang.yongrui.checklist.wechat.entity.basic.UserBasic;
 @Setter
 public class UserEntity extends UserBasic {
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<RoleEntity> roleEntitySet;

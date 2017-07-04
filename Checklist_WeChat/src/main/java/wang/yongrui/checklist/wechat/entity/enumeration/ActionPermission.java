@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum ActionPermission {
 
-	Create("Create"), Retrieve("Retrieve"), Update("Update"), Delete("Delete");
+	All("All"), Create("Create"), Retrieve("Retrieve"), Update("Update"), Delete("Delete");
 
 	private String description;
 

@@ -22,7 +22,7 @@ import wang.yongrui.checklist.wechat.entity.fundamental.AuditingEntity;
 @MappedSuperclass
 @Getter
 @Setter
-public class PermissionBasic extends AuditingEntity {
+public class PrivilegeBasic extends AuditingEntity {
 
 	@Id
 	@GeneratedValue
@@ -40,20 +40,21 @@ public class PermissionBasic extends AuditingEntity {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((permission == null) ? 0 : permission.hashCode());
+		result = prime * result + ((targetDomain == null) ? 0 : targetDomain.hashCode());
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -64,11 +65,10 @@ public class PermissionBasic extends AuditingEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PermissionBasic other = (PermissionBasic) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		PrivilegeBasic other = (PrivilegeBasic) obj;
+		if (permission != other.permission)
+			return false;
+		if (targetDomain != other.targetDomain)
 			return false;
 		return true;
 	}

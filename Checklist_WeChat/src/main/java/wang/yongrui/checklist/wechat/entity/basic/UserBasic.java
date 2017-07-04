@@ -32,6 +32,9 @@ public class UserBasic extends AuditingEntity {
 	@Id
 	private String weChatUnionId;
 
+	@Column(unique = true)
+	private String loginName;
+
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
@@ -43,7 +46,11 @@ public class UserBasic extends AuditingEntity {
 
 	private String enLastName;
 
+	@Column(unique = true)
 	private String mobileNumber;
+
+	@Column(unique = true)
+	private String eMail;
 
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)

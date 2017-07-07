@@ -51,4 +51,10 @@ public interface UserService extends UserDetailsService {
 	 */
 	public User delete(User user);
 
+	/**
+	 * @param weChatUnionId
+	 * @return
+	 */
+	public User authenticateByWeChatUnionId(String weChatUnionId);
+
 }

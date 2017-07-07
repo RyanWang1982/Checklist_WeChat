@@ -11,14 +11,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
 import wang.yongrui.checklist.wechat.entity.enumeration.Gender;
 import wang.yongrui.checklist.wechat.entity.fundamental.AuditingEntity;
+import wang.yongrui.checklist.wechat.entity.validation.UserCreateValidator;
 
 /**
  * @author Ryan Wang
@@ -30,12 +32,13 @@ import wang.yongrui.checklist.wechat.entity.fundamental.AuditingEntity;
 public class UserBasic extends AuditingEntity {
 
 	@Id
+	@NotBlank(message = "weChatUnionId", groups = { UserCreateValidator.class })
 	private String weChatUnionId;
 
 	@Column(unique = true)
 	private String loginName;
 
-	@JsonProperty(access = Access.WRITE_ONLY)
+	@JsonIgnore
 	private String password;
 
 	private String cnFirstName;

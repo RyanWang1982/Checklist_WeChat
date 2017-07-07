@@ -6,6 +6,11 @@ package wang.yongrui.checklist.wechat.service.impl;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	/*
 	 * (non-Javadoc)
@@ -104,6 +112,28 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User delete(User user) {
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see wang.yongrui.checklist.wechat.service.UserService#
+	 * authenticateByWeChatUnionId(java.lang.String)
+	 */
+	@Override
+	public User authenticateByWeChatUnionId(String weChatUnionId) {
+		User user = new User(userRepository.findOneByWeChatUnionId(weChatUnionId));
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+				user.getUsername(), user.getPassword());
+		try {
+			Authentication authentication = authenticationManager.authenticate(authenticationToken);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return user;
 	}
 
 }

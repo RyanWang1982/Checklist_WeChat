@@ -39,7 +39,7 @@ public class SystemUserInitializer {
 		PrivilegeEntity privilegeEntity = new PrivilegeEntity();
 		privilegeEntity.setName(SYSTEM_ADMIN_PRIVILEGE_NAME);
 		privilegeEntity.setDescription(SYSTEM_ADMIN_PRIVILEGE_DESCRIPTION);
-		privilegeEntity.setTargetDomain(TargetDomain.User);
+		privilegeEntity.setTargetDomain(TargetDomain.All);
 		privilegeEntity.setPermission(ActionPermission.All);
 
 		RoleEntity roleEntity = new RoleEntity();

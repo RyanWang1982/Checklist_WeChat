@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +29,11 @@ public class UserEntity extends UserBasic {
 	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<RoleEntity> roleEntitySet;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+	private Set<ChecklistTemplateEntity> checklistTemplateEntitySet;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	private Set<ChecklistInstanceEntity> checklistInstanceEntitySet;
 
 }

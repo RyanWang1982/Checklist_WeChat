@@ -120,6 +120,7 @@ public class SystemConfig {
 			@Override
 			public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
 					Object handler, Exception ex) {
+				response.setCharacterEncoding("UTF-8");
 				if (ex instanceof ConstraintViolationException) {
 					ConstraintViolationException causeException = (ConstraintViolationException) ex;
 					for (ConstraintViolation<?> details : causeException.getConstraintViolations()) {

@@ -1,9 +1,9 @@
 /**
- * 
+ *
  */
 package wang.yongrui.checklist.wechat.config;
 
-import static wang.yongrui.checklist.wechat.constant.SystemConstant.GLOBAL_ERROR_MESSAGE;
+import static wang.yongrui.checklist.wechat.constant.SystemConstant.*;
 
 import java.util.Map;
 
@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidatorFactory;
 
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
@@ -40,20 +43,12 @@ import wang.yongrui.checklist.wechat.ChecklistWeChatApplication;
 public class SystemConfig {
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
-	}
-
-	/**
-	 * @return
-	 */
-	@Bean
-	public MethodValidationPostProcessor methodValidationPostProcessor() {
-		return new MethodValidationPostProcessor();
 	}
 
 	/**
@@ -75,6 +70,41 @@ public class SystemConfig {
 				.description("This API is for Check List WeChat Mini Program").version("0.1").build();
 	}
 
+	/**
+	 * @return
+	 */
+	@Bean
+	public MethodValidationPostProcessor methodValidationPostProcessor() {
+		MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
+		methodValidationPostProcessor.setValidatorFactory(validator());
+		return methodValidationPostProcessor;
+	}
+
+	/**
+	 * @return
+	 */
+	@Bean
+	public ValidatorFactory validator() {
+		LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+		validatorFactoryBean.setValidationMessageSource(messageSource());
+		return validatorFactoryBean;
+	}
+
+	/**
+	 * @return
+	 */
+	@Bean
+	public ResourceBundleMessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setBasenames("i18n/text/TextMessages", "i18n/validation/ValidationMessages",
+				"i18n/error/ErrorMessages");
+		return messageSource;
+	}
+
+	/**
+	 * @return
+	 */
 	@Bean
 	public HandlerExceptionResolver globalExceptionResolver() {
 		return new HandlerExceptionResolver() {
@@ -105,13 +135,16 @@ public class SystemConfig {
 
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public DefaultErrorAttributes defaultErrorAttributes() {
 		return new DefaultErrorAttributes() {
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see
 			 * org.springframework.boot.autoconfigure.web.DefaultErrorAttributes
 			 * #getErrorAttributes(org.springframework.web.context.request.

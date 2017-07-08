@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package wang.yongrui.checklist.wechat.controller;
 
@@ -30,7 +30,7 @@ import wang.yongrui.checklist.wechat.service.UserService;
 
 /**
  * @author Ryan Wang
- * 
+ *
  */
 @RestController
 @RequestMapping("/user")
@@ -70,7 +70,7 @@ public class UserController {
 			@ApiResponse(code = 401, message = "Authenticate Failed") })
 	@GetMapping("/{weChatUnionId}/authentication")
 	public ResponseEntity<User> login(
-			@NotBlank(message = "weChatUnionId should not be blank --- means not null and not empty string") @PathVariable String weChatUnionId,
+			@NotBlank(message = "{user.wechat.unionid.notblank}") @PathVariable String weChatUnionId,
 			HttpServletRequest request) {
 		User user = userService.authenticateByWeChatUnionId(weChatUnionId);
 		ResponseEntity<User> response = null != user ? new ResponseEntity<>(user, HttpStatus.OK)

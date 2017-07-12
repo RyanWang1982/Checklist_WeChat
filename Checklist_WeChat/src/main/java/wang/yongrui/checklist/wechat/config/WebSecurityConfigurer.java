@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import wang.yongrui.checklist.wechat.security.WeChatAuthenticationProvider;
+
 /**
  * @author Ryan Wang
  *
@@ -23,6 +25,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private WeChatAuthenticationProvider authenticationProvider;
 
 	/*
 	 * (non-Javadoc)
@@ -45,6 +50,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.authenticationProvider(authenticationProvider);
+		http.authorizeRequests().antMatchers("/user/weChat_userInfo", "/swagger-ui.html").permitAll().anyRequest()
+				.authenticated().and().formLogin().loginPage("/user/weChat_authentication").permitAll();
 		http.csrf().disable();
 	}
 

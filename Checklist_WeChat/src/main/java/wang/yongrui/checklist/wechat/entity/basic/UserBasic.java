@@ -32,11 +32,12 @@ import wang.yongrui.checklist.wechat.entity.validation.UserCreateValidator;
 public class UserBasic extends AuditingEntity {
 
 	@Id
-	@NotBlank(message = "weChatUnionId", groups = { UserCreateValidator.class })
-	private String weChatUnionId;
-
 	@Column(unique = true)
 	private String loginName;
+
+	@Column(unique = true)
+	@NotBlank(message = "weChatUnionId", groups = { UserCreateValidator.class })
+	private String weChatUnionId;
 
 	@JsonIgnore
 	private String password;

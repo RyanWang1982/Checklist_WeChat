@@ -51,8 +51,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authenticationProvider(authenticationProvider);
-		http.authorizeRequests().mvcMatchers("/user/weChat_userInfo", "/swagger-ui.html").permitAll().and().formLogin()
-				.loginPage("/user/weChat_authentication").permitAll();
+		http.authorizeRequests()
+				.mvcMatchers("/user/weChat_userInfo", "/swagger-ui.html", "/MP_verify_BwUI1IeBZ9lAN19i.txt").permitAll()
+				.and().formLogin().loginPage("/user/weChat_authentication").permitAll();
 		http.csrf().disable();
 	}
 

@@ -1,0 +1,17 @@
+# Spring
+spring:
+  application:
+    name: Checklist_WeChat
+  datasource:
+    url: ${vcap.services.Checklist_WeChat_HANA.credentials.url}
+    username: ${vcap.services.Checklist_WeChat_HANA.credentials.user}
+    password: ${vcap.services.Checklist_WeChat_HANA.credentials.password}
+    driver-class-name: ${vcap.services.Checklist_WeChat_HANA.credentials.driver}
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  thymeleaf:
+    cache: false
+

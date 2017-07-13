@@ -1,0 +1,8 @@
+applications:
+- name: Checklist_WeChat
+  memory: 1G
+  host: ryanwang
+  path: target/Checklist_WeChat-0.0.1-SNAPSHOT.jar
+  timeout: 180
+  services:
+  - Checklist_WeChat_HANA

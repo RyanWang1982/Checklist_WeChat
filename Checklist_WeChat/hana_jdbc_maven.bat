@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=ngdbc-1.120.6.jar -DgroupId=com.sap.db.jdbc -DartifactId=ngdbc -Dversion=1.120.6 -Dpackaging=jar

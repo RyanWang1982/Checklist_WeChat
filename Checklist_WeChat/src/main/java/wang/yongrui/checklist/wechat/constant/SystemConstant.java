@@ -11,6 +11,8 @@ public final class SystemConstant {
 
 	public static final String GLOBAL_ERROR_MESSAGE = "GLOBAL_ERROR_MESSAGE";
 
+	public static final String CURRENT_AUTHENTICATED_USER = "CURRENT_AUTHENTICATED_USER";
+
 	public static final String CHARACTER_ENCODING_UTF8 = "UTF-8";
 
 	public static final String WECHAT_OAUTH_REDIRECT_URI = "{WECHAT_OAUTH_REDIRECT_URI}";

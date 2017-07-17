@@ -151,12 +151,14 @@ public class UserServiceImpl implements UserService {
 	public User authenticateViaWeChat(String code) {
 		User user = null;
 		String userWeChatOAOpenId = getOAuthAccessToken(code).getOpenId();
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				userWeChatOAOpenId, null);
+		User principal = new User();
+		principal.setWeChatOAOpenId(userWeChatOAOpenId);
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal,
+				null);
 		try {
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			user = (User) authentication.getDetails();
+			user = (User) authentication.getPrincipal();
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
 			throw new RuntimeException("No WeChat register information found. Register your account via WeChat");

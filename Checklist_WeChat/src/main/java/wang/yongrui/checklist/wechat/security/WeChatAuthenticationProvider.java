@@ -39,7 +39,7 @@ public class WeChatAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		String wechatOAOpenId = authentication.getPrincipal().toString();
+		String wechatOAOpenId = ((User) authentication.getPrincipal()).getWeChatOAOpenId();
 
 		User weChatUser = (User) userDetails;
 		if (weChatUser == null || !wechatOAOpenId.equals(weChatUser.getWeChatOAOpenId())) {
@@ -69,7 +69,7 @@ public class WeChatAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
 		try {
 			loadedUser = ((UserService) this.getUserDetailsService())
-					.retrieveOneByWeChatOAOpenId(authentication.getPrincipal().toString());
+					.retrieveOneByWeChatOAOpenId(((User) authentication.getPrincipal()).getWeChatOAOpenId());
 		} catch (Exception repositoryProblem) {
 			throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
 		}

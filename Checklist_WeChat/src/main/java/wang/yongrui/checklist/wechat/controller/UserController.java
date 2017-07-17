@@ -9,11 +9,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -45,6 +49,8 @@ public class UserController {
 
 	private static final String WECHAT_AUTHENTICATION_URI = "/weChat_authentication";
 
+	private RequestCache requestCache = new HttpSessionRequestCache();
+
 	@Autowired
 	private UserService userService;
 
@@ -63,7 +69,8 @@ public class UserController {
 	@GetMapping
 	@PreAuthorize("hasPermission('User', 'Retrieve')")
 	public ResponseEntity<User> retrieve(HttpServletRequest request) {
-		return null;
+		User user = (User) request.getSession().getAttribute(CURRENT_AUTHENTICATED_USER);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@PutMapping
@@ -89,9 +96,6 @@ public class UserController {
 	@ApiOperation(value = "This api is only for Wechat, not for public", hidden = true)
 	@GetMapping(WECHAT_AUTHENTICATION_URI)
 	public ModelAndView getWeChatAuthenticate(HttpServletRequest request) throws UnsupportedEncodingException {
-		// TODO Cache request --- for redirecting back to the request before
-		// authentication
-
 		String redirectBackUrl = request.getRequestURL().toString().replace(WECHAT_AUTHENTICATION_URI,
 				WECHAT_USER_INFO_URI);
 		redirectBackUrl = URLEncoder.encode(redirectBackUrl, CHARACTER_ENCODING_UTF8);
@@ -102,19 +106,20 @@ public class UserController {
 
 	@ApiOperation(value = "This api is only for Wechat, not for public", hidden = true)
 	@GetMapping(WECHAT_USER_INFO_URI)
-	public ModelAndView getWeChatUserInfo(@RequestParam(required = true) String code, HttpServletRequest request) {
-		String redirectUrl = "";
+	public ModelAndView getWeChatUserInfo(@RequestParam(required = true) String code, HttpServletRequest request,
+			HttpServletResponse response) {
+		String redirectUrl = null;
 
 		User user = userService.authenticateViaWeChat(code);
 		if (null == user) {
 			// TODO Redirect to register page;
 			// redirectUrl = "registerPage";
 		} else {
-			// TODO Get cached request
-			// redirectUrl = "requestBeforAuthentication";
+			redirectUrl = requestCache.getRequest(request, response).getRedirectUrl();
+			request.getSession().setAttribute(CURRENT_AUTHENTICATED_USER, user);
 		}
 
-		return null;
+		return null == redirectUrl ? null : new ModelAndView(new RedirectView(redirectUrl), null);
 	}
 
 }

@@ -15,6 +15,10 @@ public final class SystemConstant {
 
 	public static final String CHARACTER_ENCODING_UTF8 = "UTF-8";
 
+	public static final String WECHAT_URI_PREFIX = "/weChat";
+
+	public static final String AUTHENTICATION_URI = "/authentication";
+
 	public static final String WECHAT_OAUTH_REDIRECT_URI = "{WECHAT_OAUTH_REDIRECT_URI}";
 
 	public static final String WECHAT_OAUTH_ACCESS_TOKEN = "{OAUTH_ACCESS_TOKEN}";

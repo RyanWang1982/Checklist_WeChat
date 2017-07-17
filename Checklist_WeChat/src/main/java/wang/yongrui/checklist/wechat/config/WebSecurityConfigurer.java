@@ -3,6 +3,8 @@
  */
 package wang.yongrui.checklist.wechat.config;
 
+import static wang.yongrui.checklist.wechat.constant.SystemConstant.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -53,7 +55,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.authenticationProvider(authenticationProvider);
 		http.authorizeRequests()
 				.mvcMatchers("/user/weChat_userInfo", "/swagger-ui.html", "/MP_verify_BwUI1IeBZ9lAN19i.txt").permitAll()
-				.and().formLogin().loginPage("/user/weChat_authentication").permitAll();
+				.and().formLogin().loginPage(WECHAT_URI_PREFIX + AUTHENTICATION_URI).permitAll();
 		http.csrf().disable();
 	}
 

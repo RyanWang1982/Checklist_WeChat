@@ -66,6 +66,10 @@ public class WeChatParameters {
 	@Value("${weChat.message_template_id}")
 	private String messageTemplateId;
 
+	public String getOAuthAuthorizeSnsapiBaseUrl(String redirectUrl) {
+		return oAuthAuthorizeSnsapiBaseUrl.replace(WECHAT_OAUTH_REDIRECT_URI, redirectUrl);
+	}
+
 	public String getOAuthAuthorizeSnsapiUserinfoUrl(String redirectUrl) {
 		return oAuthAuthorizeSnsapiUserinfoUrl.replace(WECHAT_OAUTH_REDIRECT_URI, redirectUrl);
 	}

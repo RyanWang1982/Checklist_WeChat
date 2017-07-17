@@ -86,11 +86,11 @@ public class UserServiceImpl implements UserService {
 	 * (non-Javadoc)
 	 * 
 	 * @see wang.yongrui.checklist.wechat.service.UserService#
-	 * retrieveOneByWeChatUnionId(java.lang.String)
+	 * retrieveOneByWeChatOAOpenId(java.lang.String)
 	 */
 	@Override
-	public User retrieveOneByWeChatUnionId(String weChatUnionId) {
-		return new User(userRepository.findOneByWeChatUnionId(weChatUnionId));
+	public User retrieveOneByWeChatOAOpenId(String weChatOAOpenId) {
+		return new User(userRepository.findOneByWeChatOAOpenId(weChatOAOpenId));
 	}
 
 	/*
@@ -150,9 +150,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User authenticateViaWeChat(String code) {
 		User user = null;
-		String userWeChatUnionId = getWeChatUserInfo(code).getUnionId();
+		String userWeChatOAOpenId = getOAuthAccessToken(code).getOpenId();
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				userWeChatUnionId, null);
+				userWeChatOAOpenId, null);
 		try {
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);

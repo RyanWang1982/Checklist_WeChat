@@ -95,7 +95,7 @@ public class UserController {
 		String redirectBackUrl = request.getRequestURL().toString().replace(WECHAT_AUTHENTICATION_URI,
 				WECHAT_USER_INFO_URI);
 		redirectBackUrl = URLEncoder.encode(redirectBackUrl, CHARACTER_ENCODING_UTF8);
-		String weChatOAuthRedirectUrl = weChatParameters.getOAuthAuthorizeSnsapiUserinfoUrl(redirectBackUrl);
+		String weChatOAuthRedirectUrl = weChatParameters.getOAuthAuthorizeSnsapiBaseUrl(redirectBackUrl);
 
 		return new ModelAndView(new RedirectView(weChatOAuthRedirectUrl), null);
 	}
@@ -114,7 +114,7 @@ public class UserController {
 			// redirectUrl = "requestBeforAuthentication";
 		}
 
-		return new ModelAndView(new RedirectView(redirectUrl), null);
+		return null;
 	}
 
 }

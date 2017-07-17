@@ -6,7 +6,7 @@
 	<groupId>wang.yongrui</groupId>
 	<artifactId>Checklist_WeChat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Checklist_WeChat</name>
 	<description>Project for Checklist in WeChat</description>
@@ -130,6 +130,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -185,7 +195,7 @@
 							<target>
 								<delete file="${project.build.directory}/classes/application.yml" />
 								<copy
-									file="${project.build.directory}/classes/application_cf_hana.yml"
+									file="${project.build.directory}/classes/application_neo_hana.yml"
 									tofile="${project.build.directory}/classes/application.yml" />
 							</target>
 						</configuration>

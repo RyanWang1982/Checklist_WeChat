@@ -39,11 +39,11 @@ public class WeChatAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		String wechatUnionId = authentication.getPrincipal().toString();
+		String wechatOAOpenId = authentication.getPrincipal().toString();
 
 		User weChatUser = (User) userDetails;
-		if (!weChatUser.getWeChatUnionId().equals(wechatUnionId)) {
-			logger.debug("Authentication failed: WeChat UnionId does not match stored value");
+		if (weChatUser == null || !wechatOAOpenId.equals(weChatUser.getWeChatOAOpenId())) {
+			logger.debug("Authentication failed: WeChat Official Account OpenId does not match stored value");
 
 			throw new BadCredentialsException(
 					messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
@@ -69,7 +69,7 @@ public class WeChatAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
 		try {
 			loadedUser = ((UserService) this.getUserDetailsService())
-					.retrieveOneByWeChatUnionId(authentication.getPrincipal().toString());
+					.retrieveOneByWeChatOAOpenId(authentication.getPrincipal().toString());
 		} catch (Exception repositoryProblem) {
 			throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
 		}

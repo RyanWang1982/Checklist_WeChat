@@ -22,10 +22,10 @@ public interface UserService extends UserDetailsService {
 	public User create(User user);
 
 	/**
-	 * @param weChatUnionId
+	 * @param weChatOAOpenId
 	 * @return
 	 */
-	public User retrieveOneByWeChatUnionId(String weChatUnionId);
+	public User retrieveOneByWeChatOAOpenId(String weChatOAOpenId);
 
 	/**
 	 * @param loginName

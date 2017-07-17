@@ -16,8 +16,16 @@ import wang.yongrui.checklist.wechat.entity.jpa.UserEntity;
 @NoRepositoryBean
 public interface UserRepository extends JpaRepository<UserEntity, String>, JpaSpecificationExecutor<UserEntity> {
 
-	UserEntity findOneByWeChatUnionId(String weChatUnionId);
+	/**
+	 * @param weChatOAOpenId
+	 * @return
+	 */
+	public UserEntity findOneByWeChatOAOpenId(String weChatOAOpenId);
 
-	UserEntity findOneByLoginName(String loginName);
+	/**
+	 * @param loginName
+	 * @return
+	 */
+	public UserEntity findOneByLoginName(String loginName);
 
 }

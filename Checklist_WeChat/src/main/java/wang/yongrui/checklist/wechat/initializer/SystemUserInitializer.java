@@ -53,7 +53,7 @@ public class SystemUserInitializer {
 		roleEntitySet.add(roleEntity);
 
 		UserEntity userEntity = new UserEntity();
-		userEntity.setWeChatUnionId("RyanWang12233368");
+		userEntity.setWeChatOAOpenId("o7SY5wjfSBudAdgnRPzzKKL888lw");
 		userEntity.setLoginName("Ryan_Wang");
 		userEntity.setPassword("12233368");
 		userEntity.setGender(Gender.Male);
